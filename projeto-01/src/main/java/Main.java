@@ -4,9 +4,9 @@ public class Main {
   public static void main(String[] args) throws IOException {
 
     CadastraCarro carro = new CadastraCarro();
-    //carro.logar();
+    carro.logar();
 
     ModificaArquivo mod = new ModificaArquivo();
-    mod.converterCsv();
+    //mod.converterCsv();
   }
 }

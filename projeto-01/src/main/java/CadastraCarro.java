@@ -1,3 +1,5 @@
+import entities.Carro;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -78,7 +80,7 @@ public class CadastraCarro {
         salvar(carro);
 
         System.out.println("======================================");
-        System.out.println("Digite - 1 - para continuar cadastrando e - 2 - para parar");
+        System.out.println("Digite - 1 - para continuar cadastrando e - 2 - para finalizar");
         int opcao = scanner.nextInt();
 
         switch (opcao){
@@ -94,7 +96,10 @@ public class CadastraCarro {
 
     }catch (IOException e){
       e.printStackTrace();
+    }finally {
+      if (scanner != null) {
+        scanner.close();
+      }
     }
-
   }
 }

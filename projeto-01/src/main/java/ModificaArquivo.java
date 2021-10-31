@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import entities.Carro;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,20 +9,22 @@ import java.util.List;
 public class ModificaArquivo {
   public void converterCsv() throws IOException {
 
-    try{
-      String path = "carro.csv";
+    String path = "carro.csv";
 
-      List<Carro> list = new ArrayList<>();
+    //try with resources -> desaloca de forma automatizado
+    try(BufferedReader br = new BufferedReader(new FileReader(path))){
 
-      BufferedReader br = new BufferedReader(new FileReader(path));
-      String line = br.readLine();
+      List<Carro> list = new ArrayList<>(); //criado para poder manipular os dados
+      String line = br.readLine(); //ler a primeira linha
+
       while (line != null) {
 
-        String[] vect = line.split(",");
+        //padrao internacional (virgula)
+        String[] vect = line.split(","); //recota onde tem virgula e coloca no vect
         String marca = vect[0];
         String modelo = vect[1];
         String cor = vect[2];
-        Integer ano = Integer.parseInt(vect[3]);
+        Integer ano = Integer.parseInt(vect[3]); //converte para int
         Double versao = Double.parseDouble(vect[4]);
 
 
@@ -30,8 +33,14 @@ public class ModificaArquivo {
 
         line = br.readLine();
       }
+
+      /*System.out.println("Carros:");
+      for (Carro p : list) {
+        System.out.println(p);
+      }*/
+
       transformarParaJson(list);
-      transformeXml(list);
+      transformarXml(list);
     }
     catch (IOException e) {
       System.out.println("Error: " + e.getMessage());
@@ -47,7 +56,7 @@ public class ModificaArquivo {
       System.out.println("Error: " + e.getMessage());
     }
   }
-  public void transformeXml(List<Carro> carro) throws IOException {
+  public void transformarXml(List<Carro> carro) throws IOException {
     try {
       XmlMapper xmlMapper = new XmlMapper();
       File file = new File("carro.xml");
